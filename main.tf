@@ -18,6 +18,8 @@ locals {
   }
 }
 
+# just a comment
+
 resource "random_string" "uid" {
   # NOTE: Don't get too crazy here, several aws resources have tight limits on lengths (such as load balancers), in practice we are also relying on users to uniquely identify their cluster names
   length  = 3
