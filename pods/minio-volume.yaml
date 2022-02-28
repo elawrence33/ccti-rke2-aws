@@ -1,0 +1,51 @@
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: gitlab-minio
+#   labels:
+#     app: minio
+#     chart: minio-0.4.3
+#     component: app
+#     heritage: Helm
+#     # pod-template-hash: fbd6dbb4d
+#     release: gitlab
+#     security.istio.io/tlsMode: istio
+#     service.istio.io/canonical-name: minio
+#     service.istio.io/canonical-revision: latest
+# spec:
+#   storageClassName: local-path # Original value: gitlab
+#   local:                          # Original value: local and path did not exist
+#     path: /minio 
+#   claimRef:
+#     name: gitlab-minio
+#     namespace: gitlab
+#   capacity:
+#     storage: 10Gi
+#   volumeMode: Filesystem
+#   accessModes:
+#     - ReadWriteOnce
+#   persistentVolumeReclaimPolicy: Delete # May be depricated
+#   nodeAffinity: 
+#     required: 
+#       nodeSelectorTerms: 
+#       - matchExpressions: 
+#         - key: kubernetes.io/hostname
+#           operator: In
+#           values: 
+#           - ip-172-31-19-123.us-west-1.compute.internal
+#   # hostPath:
+#   #   path: "/mnt/data"
+# ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: gitlab-minio
+  namespace: gitlab
+spec:
+  volumeName: gitlab-minio
+  storageClassName: local-path
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Gi

@@ -1,0 +1,48 @@
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: redis-data-gitlab-redis-master-0
+#   labels:
+#     app: redis
+#     chart: redis-11.3.4
+#     controller-revision-hash: gitlab-redis-master-5464b9f8f8
+#     release: gitlab
+#     role: master
+#     security.istio.io/tlsMode: istio
+#     service.istio.io/canonical-name: redis
+#     service.istio.io/canonical-revision: latest
+#     statefulset.kubernetes.io/pod-name: gitlab-redis-master-0
+# spec:
+#   storageClassName: local-path
+#   local:
+#     path: /redis
+#   claimRef:
+#     name: redis-data-gitlab-redis-master-0
+#     namespace: gitlab
+#   volumeMode: Filesystem
+#   capacity:
+#     storage: 10Gi
+#   accessModes:
+#     - ReadWriteOnce
+#   persistentVolumeReclaimPolicy: Delete # May be depricated
+#   nodeAffinity: 
+#     required: 
+#       nodeSelectorTerms: 
+#       - matchExpressions: 
+#         - key: kubernetes.io/hostname
+#           operator: In
+#           values: 
+#           - ip-172-31-26-113.us-west-1.compute.internal
+# ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redis-data-gitlab-redis-master-0
+  namespace: gitlab
+spec:
+  storageClassName: local-path
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Gi

@@ -1,0 +1,49 @@
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: data-gitlab-postgresql-0
+#   labels:
+#     app: postgresql
+#     chart: postgresql-8.9.4
+#     controller-revision-hash: gitlab-postgresql-84b766d5bd
+#     heritage: Helm
+#     release: gitlab
+#     role: master
+#     security.istio.io/tlsMode: istio
+#     service.istio.io/canonical-name: postgresql
+#     service.istio.io/canonical-revision: latest
+#     statefulset.kubernetes.io/pod-name: gitlab-postgresql-0
+# spec:
+#   storageClassName: local-path
+#   local:
+#     path: /postgresql
+#   claimRef:
+#     name: data-gitlab-postgresql-0
+#     namespace: gitlab
+#   volumeMode: Filesystem
+#   capacity:
+#     storage: 10Gi
+#   accessModes:
+#     - ReadWriteOnce
+#   persistentVolumeReclaimPolicy: Delete # May be depricated
+#   nodeAffinity: 
+#     required: 
+#       nodeSelectorTerms: 
+#       - matchExpressions: 
+#         - key: kubernetes.io/hostname
+#           operator: In
+#           values: 
+#           - ip-172-31-26-113.us-west-1.compute.internal
+# ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: data-gitlab-postgresql-0
+  namespace: gitlab
+spec:
+  storageClassName: local-path
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Gi

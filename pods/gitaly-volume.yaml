@@ -1,0 +1,48 @@
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: repo-data-gitlab-gitaly-0
+#   labels:
+#     app: gitaly
+#     chart: gitaly-5.6.2
+#     controller-revision-hash: gitlab-gitaly-85fcfbfb49
+#     heritage: Helm
+#     release: gitlab
+#     security.istio.io/tlsMode: istio
+#     service.istio.io/canonical-name: gitaly
+#     service.istio.io/canonical-revision: latest
+#     statefulset.kubernetes.io/pod-name: gitlab-gitaly-0
+# spec:
+#   storageClassName: local-path
+#   local:
+#     path: /gitaly
+#   claimRef:
+#     name: gitlab-gitaly-0
+#     namespace: gitlab
+#   volumeMode: Filesystem
+#   capacity:
+#     storage: 10Gi
+#   accessModes:
+#     - ReadWriteOnce
+#   persistentVolumeReclaimPolicy: Delete # May be depricated
+#   nodeAffinity: 
+#     required: 
+#       nodeSelectorTerms: 
+#       - matchExpressions: 
+#         - key: kubernetes.io/hostname
+#           operator: In
+#           values: 
+#           - ip-172-31-26-113.us-west-1.compute.internal
+# ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: repo-data-gitlab-gitaly-0
+  namespace: gitlab
+spec:
+  storageClassName: local-path
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Gi
